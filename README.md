@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QAHWA digital flagship prototype
 
-## Getting Started
+A standalone Next.js prototype for QAHWA in Hydra. It preserves the current photographic brand language and adds ordering, matcha customisation, merchandise, loyalty and operations concepts.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Included
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Replica-inspired public homepage using the current QAHWA image assets
+- Searchable menu with dine-in, pickup and delivery entry modes
+- Matcha powder selection for daily, ceremonial Uji and rare single-origin grades
+- Working client-side cart and guest-name demo checkout
+- Merchandise and proposed QAHWA Circle loyalty routes
+- Admin concept covering order queue, sales, inventory, recipe forecasting, guest frequency, staff attendance and QR access
+- Zone-based QR codes that remain useful when tables are moved
+- Responsive desktop and mobile layouts, reduced motion and system dark mode
 
-## Learn More
+## Production boundary
 
-To learn more about Next.js, take a look at the following resources:
+This is an interactive product prototype. It does not process real payments or persist real orders. Dashboard values are explicitly marked as demonstration data.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A production release should add a transactional database, authenticated role-based admin access, real payment and delivery integrations, order notifications, audit logs, backups and consent-aware analytics. Recommended core records are locations, zones, products, product variants, recipes, ingredients, stock movements, orders, order lines, guests, loyalty ledger entries, staff, shifts and attendance corrections.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## QR model for movable tables
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Codes represent service zones such as Indoor, Terrace and Counter instead of permanent table numbers. The guest enters a name and receives an order number. Staff can call the guest or deliver within the zone even after furniture moves. Fixed-table codes can still be enabled for banquettes or private rooms.
