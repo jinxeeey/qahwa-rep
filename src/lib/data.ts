@@ -24,18 +24,18 @@ export type MenuItem = {
   matcha?: boolean;
 };
 
-const espressoImage = "/images/qahwa-espresso-clear.png";
-const latteImage = "/images/qahwa-latte-clear.png";
-const mochaImage = "/images/qahwa-mocha-clear.png";
-const matchaImage = "/images/qahwa-matcha-clear.png";
-const berryMatchaImage = "/images/qahwa-strawberry-matcha-clear.png";
-const hojichaImage = "/images/qahwa-hojicha-clear.png";
-const ubeImage = "/images/qahwa-ube-clear.png";
-const sparklingImage = "/images/qahwa-yuzu-clear.png";
-const greenSmoothieImage = "/images/qahwa-green-smoothie-clear.png";
-const juiceImage = "/images/qahwa-orange-juice-clear.png";
-const bakeryImage = "/images/qahwa-cookie.png";
-const smallPlateImage = "/images/qahwa-toast.png";
+const espressoImage = "/images/qahwa-espresso-clear.webp";
+const latteImage = "/images/qahwa-latte-clear.webp";
+const mochaImage = "/images/qahwa-mocha-clear.webp";
+const matchaImage = "/images/qahwa-matcha-clear.webp";
+const berryMatchaImage = "/images/qahwa-strawberry-matcha-clear.webp";
+const hojichaImage = "/images/qahwa-hojicha-clear.webp";
+const ubeImage = "/images/qahwa-ube-clear.webp";
+const sparklingImage = "/images/qahwa-yuzu-clear.webp";
+const greenSmoothieImage = "/images/qahwa-green-smoothie-clear.webp";
+const juiceImage = "/images/qahwa-orange-juice-clear.webp";
+const bakeryImage = "/images/qahwa-cookie.webp";
+const smallPlateImage = "/images/qahwa-toast.webp";
 
 // These families keep every product visually relevant while preserving one
 // tightly controlled QAHWA photography system across the long catalog.
