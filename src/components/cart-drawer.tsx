@@ -8,6 +8,7 @@ import { formatDzd } from "@/lib/data";
 export function CartDrawer() {
   const { lines, total, drawerOpen, setDrawerOpen, updateQuantity, removeLine, clearCart } = useCart();
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [service, setService] = useState<"dine-in" | "pickup">("dine-in");
   const [error, setError] = useState("");
   const [orderNumber, setOrderNumber] = useState<number | null>(null);
@@ -16,6 +17,13 @@ export function CartDrawer() {
     if (!name.trim()) {
       setError("Add the guest name so the team can call the order.");
       return;
+    }
+    if (service === "pickup") {
+      const normalizedPhone = phone.replace(/[\s().-]/g, "");
+      if (!/^(?:\+213|0)[567]\d{8}$/.test(normalizedPhone)) {
+        setError("Add a valid Algerian mobile number for pickup updates.");
+        return;
+      }
     }
     setError("");
     setOrderNumber(37);
@@ -40,7 +48,7 @@ export function CartDrawer() {
           <div className="order-success">
             <CheckCircle size={42} weight="thin" />
             <h3>Thank you, {name.trim()}.</h3>
-            <p>Your order number is <strong>{orderNumber}</strong>. We will call your name when it is ready.</p>
+            <p>Your order number is <strong>{orderNumber}</strong>. {service === "pickup" ? `We will contact ${phone.trim()} when it is ready.` : "We will call your name when it is ready."}</p>
             <button className="primary-button" type="button" onClick={close}>Done</button>
           </div>
         ) : lines.length === 0 ? (
@@ -73,12 +81,19 @@ export function CartDrawer() {
             <div className="checkout-form">
               <fieldset className="segmented-control">
                 <legend>Service mode</legend>
-                <button type="button" className={service === "dine-in" ? "is-active" : ""} onClick={() => setService("dine-in")}>Dine in</button>
-                <button type="button" className={service === "pickup" ? "is-active" : ""} onClick={() => setService("pickup")}>Pickup</button>
+                <button type="button" className={service === "dine-in" ? "is-active" : ""} onClick={() => { setService("dine-in"); setError(""); }}>Dine in</button>
+                <button type="button" className={service === "pickup" ? "is-active" : ""} onClick={() => { setService("pickup"); setError(""); }}>Pickup</button>
               </fieldset>
               <label htmlFor="guest-name">Name for the order</label>
               <input id="guest-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="For example, Amel" />
               <small>Used only to identify this order at the counter.</small>
+              {service === "pickup" && (
+                <div className="pickup-phone-field">
+                  <label htmlFor="pickup-phone">Phone number for pickup</label>
+                  <input id="pickup-phone" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="0550 00 00 00" />
+                  <small>Used only for this order so the team can confirm it is ready.</small>
+                </div>
+              )}
               {error && <p className="form-error">{error}</p>}
               <div className="checkout-total"><span>Total</span><strong>{formatDzd(total)}</strong></div>
               <button className="primary-button" type="button" onClick={placeOrder}>Place demo order</button>

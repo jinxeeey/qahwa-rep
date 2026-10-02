@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { MagnifyingGlass, MapPin, Plus, SlidersHorizontal, X } from "@phosphor-icons/react";
+import { Info, Leaf, MagnifyingGlass, MapPin, Plus, SlidersHorizontal, X } from "@phosphor-icons/react";
 import { useCart } from "@/components/cart-provider";
-import { formatDzd, menuItems, type MenuItem } from "@/lib/data";
-
-const categories = ["All", "Matcha", "Coffee", "Fresh", "Brunch", "Dessert"];
+import { formatDzd, menuCategories, menuItems, teaGuides, type MenuItem } from "@/lib/data";
 
 export function MenuExperience({ initialCategory, zone, service }: { initialCategory?: string; zone?: string; service?: string }) {
-  const [category, setCategory] = useState(categories.includes(initialCategory ?? "") ? initialCategory! : "All");
+  const initial = menuCategories.find((item) => item === initialCategory) ?? "All";
+  const [category, setCategory] = useState<(typeof menuCategories)[number]>(initial);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<MenuItem | null>(null);
 
@@ -45,7 +44,7 @@ export function MenuExperience({ initialCategory, zone, service }: { initialCate
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the menu…" />
         </label>
         <div className="category-scroll">
-          {categories.map((item) => (
+          {menuCategories.map((item) => (
             <button key={item} type="button" className={category === item ? "is-active" : ""} onClick={() => setCategory(item)}>{item}</button>
           ))}
         </div>
@@ -73,6 +72,27 @@ export function MenuExperience({ initialCategory, zone, service }: { initialCate
         )}
       </section>
 
+      <section className="tea-guide section-shell" aria-labelledby="tea-guide-title">
+        <div className="tea-guide-heading">
+          <span className="micro-label"><Leaf size={15} /> Tea guide</span>
+          <h2 id="tea-guide-title">Matcha or hojicha?</h2>
+          <p>Both begin with Japanese green tea. Matcha is vivid, vegetal and full-bodied. Hojicha is roasted for a warmer, toastier cup that many guests find gentler in flavour.</p>
+        </div>
+        <div className="tea-guide-grid">
+          {teaGuides.map((guide) => (
+            <article key={guide.id}>
+              <span>0{guide.id === "matcha" ? "1" : "2"}</span>
+              <h3>{guide.title}</h3>
+              <p>{guide.subtitle}</p>
+              <ul>{guide.notes.map((note) => <li key={note}>{note}</li>)}</ul>
+              <button type="button" onClick={() => { setCategory(guide.id === "matcha" ? "Matcha" : "Hojicha"); document.querySelector(".menu-controls")?.scrollIntoView({ behavior: "smooth" }); }}>Explore {guide.title}</button>
+            </article>
+          ))}
+        </div>
+        <div className="tea-note"><Info size={16} /><p>Tea notes are general guidance, not medical advice. Caffeine varies with the leaf, serving size and preparation. Our hojicha is positioned as a flavour and caffeine alternative, not as a universally better tea.</p></div>
+        <div className="tea-sources">Reading: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11016062/" target="_blank" rel="noreferrer">human response study</a><a href="https://pubmed.ncbi.nlm.nih.gov/39856977/" target="_blank" rel="noreferrer">tea compound study</a></div>
+      </section>
+
       {selected && <ProductDialog item={selected} onClose={() => setSelected(null)} />}
     </main>
   );
@@ -86,7 +106,8 @@ function ProductDialog({ item, onClose }: { item: MenuItem; onClose: () => void 
 
   const gradePrice = grade === "Ceremonial Uji" ? 350 : grade === "Single-origin Japan" ? 650 : 0;
   const price = item.price + (item.matcha ? gradePrice : 0);
-  const options = item.category === "Coffee" || item.matcha
+  const isPreparedDrink = ["Classics", "Signature", "Matcha", "Hojicha", "Non-coffee"].includes(item.category);
+  const options = isPreparedDrink
     ? `${temperature}, ${milk}${item.matcha ? `, ${grade}` : ""}`
     : "Standard preparation";
 
@@ -104,10 +125,10 @@ function ProductDialog({ item, onClose }: { item: MenuItem; onClose: () => void 
         <div className="product-dialog-copy">
           <div><span className="micro-label">{item.category}</span><h2 id="product-title">{item.name}</h2><p>{item.description}</p></div>
 
-          {(item.category === "Coffee" || item.matcha) && (
+          {isPreparedDrink && (
             <div className="option-group"><h3>Preparation</h3><div className="choice-grid">{["Hot", "Iced"].map((choice) => <button type="button" className={temperature === choice ? "is-active" : ""} key={choice} onClick={() => setTemperature(choice)}>{choice}</button>)}</div></div>
           )}
-          {(item.category === "Coffee" || item.matcha) && (
+          {isPreparedDrink && (
             <div className="option-group"><h3>Milk</h3><div className="choice-grid choice-grid--three">{["Whole milk", "Oat", "Almond"].map((choice) => <button type="button" className={milk === choice ? "is-active" : ""} key={choice} onClick={() => setMilk(choice)}>{choice}</button>)}</div></div>
           )}
           {item.matcha && (
