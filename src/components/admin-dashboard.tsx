@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import {
   ArrowLeft,
@@ -22,6 +22,13 @@ import {
 
 type AdminTab = "Overview" | "Orders" | "Inventory" | "Team" | "Guests" | "QR access";
 type OrderState = "New" | "Preparing" | "Ready" | "Complete";
+
+const fallbackOrigin = "https://qahwathecoffee.com";
+const subscribeToOrigin = () => () => undefined;
+
+function useBrowserOrigin() {
+  return useSyncExternalStore(subscribeToOrigin, () => window.location.origin, () => fallbackOrigin);
+}
 
 const tabs: { name: AdminTab; icon: typeof House }[] = [
   { name: "Overview", icon: House },
@@ -210,8 +217,7 @@ function GuestsPanel() {
 }
 
 function QrPanel() {
-  const [origin, setOrigin] = useState("https://qahwathecoffee.com");
-  useEffect(() => setOrigin(window.location.origin), []);
+  const origin = useBrowserOrigin();
   return (
     <div className="admin-view">
       <section className="qr-explainer admin-panel"><div><QrCode size={28} /><div><h2>Zone QR codes solve movable tables.</h2><p>Attach each code to a service area, not a table. The guest adds a name, and the order receives a number. Staff can still locate or call the guest when furniture moves.</p></div></div><span>Recommended setup</span></section>

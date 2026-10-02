@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${manrope.variable} ${cormorant.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <CartProvider>
           <SiteChrome>{children}</SiteChrome>

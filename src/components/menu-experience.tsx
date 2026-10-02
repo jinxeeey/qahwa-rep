@@ -26,9 +26,9 @@ export function MenuExperience({ initialCategory, zone, service }: { initialCate
     <main className="menu-page page-with-header">
       <section className="menu-intro section-shell">
         <div>
-          <span className="micro-label">{serviceLabel}</span>
           <h1>Our menu</h1>
-          <p>Made daily in Hydra. Personalise your drink, then add a name for the order.</p>
+          <p>Drinks &amp; pastries crafted daily by our baristas.</p>
+          <span className="menu-service-label">{serviceLabel}</span>
         </div>
         {zoneLabel && (
           <div className="scan-context">
@@ -42,7 +42,7 @@ export function MenuExperience({ initialCategory, zone, service }: { initialCate
         <label className="search-field">
           <span className="sr-only">Search the menu</span>
           <MagnifyingGlass size={19} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search drinks and food" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the menu…" />
         </label>
         <div className="category-scroll">
           {categories.map((item) => (
