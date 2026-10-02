@@ -57,7 +57,7 @@ export function MenuExperience({ initialCategory, zone, service }: { initialCate
             {filtered.map((item, index) => (
               <article className={`menu-card ${index === 0 ? "menu-card--featured" : ""}`} key={item.id}>
                 <button type="button" className="menu-card-image" onClick={() => setSelected(item)} aria-label={`Customise ${item.name}`}>
-                  <Image src={item.image} alt={item.name} fill priority={index === 0} sizes="(max-width: 760px) 50vw, 28vw" />
+                  <Image src={item.image} alt={item.name} fill loading={index === 0 ? "eager" : "lazy"} sizes="(max-width: 760px) 50vw, 28vw" />
                   {item.featured && <span>QAHWA pick</span>}
                 </button>
                 <div className="menu-card-copy">
