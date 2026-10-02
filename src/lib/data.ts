@@ -24,60 +24,14 @@ export type MenuItem = {
   matcha?: boolean;
 };
 
-const espressoImage = "/images/qahwa-espresso-clear.webp";
-const latteImage = "/images/qahwa-latte-clear.webp";
-const mochaImage = "/images/qahwa-mocha-clear.webp";
-const matchaImage = "/images/qahwa-matcha-clear.webp";
-const berryMatchaImage = "/images/qahwa-strawberry-matcha-clear.webp";
-const hojichaImage = "/images/qahwa-hojicha-clear.webp";
-const ubeImage = "/images/qahwa-ube-clear.webp";
-const sparklingImage = "/images/qahwa-yuzu-clear.webp";
-const greenSmoothieImage = "/images/qahwa-green-smoothie-clear.webp";
-const juiceImage = "/images/qahwa-orange-juice-clear.webp";
-const bakeryImage = "/images/qahwa-cookie.webp";
-const smallPlateImage = "/images/qahwa-toast.webp";
-
-// These families keep every product visually relevant while preserving one
-// tightly controlled QAHWA photography system across the long catalog.
-const espressoIds = new Set(["espresso", "double", "americano", "cortado", "v60"]);
-const mochaIds = new Set([
-  "mocha", "iced-mint-chocolate", "tiramisu-latte", "white-chocolate-mocha",
-  "qahwa-affogato", "black-sesame-latte", "peanut-mocha", "hot-chocolate",
-  "flavoured-milkshake", "peanut-espresso",
-]);
-const berryIds = new Set([
-  "strawberry-matcha", "rose-matcha", "pistachio-matcha", "jasmin-matcha",
-  "tropical-matcha", "cloud-matcha", "berry-matcha", "strawberry-hojicha",
-  "strawberry-mojito", "strawberry-oat", "blue-glow", "beetroot-shot",
-]);
-const sparklingIds = new Set([
-  "orange-tonic", "sparkling-yuzu-matcha", "sparkling-yuzu-hojicha",
-  "tropical-hojicha", "organic-infusion", "iced-tea", "classic-mojito", "house-soda",
-]);
-const greenIds = new Set(["green-boost", "drink-your-salad", "green-detox"]);
-
-function menuImageFor(item: MenuItem) {
-  if (espressoIds.has(item.id)) return espressoImage;
-  if (mochaIds.has(item.id)) return mochaImage;
-  if (berryIds.has(item.id)) return berryMatchaImage;
-  if (sparklingIds.has(item.id)) return sparklingImage;
-  if (greenIds.has(item.id)) return greenSmoothieImage;
-  if (item.id === "ube-latte") return ubeImage;
-  if (item.category === "Matcha") return matchaImage;
-  if (item.category === "Hojicha") return hojichaImage;
-  if (item.category === "Fresh juices" || item.id === "ginger-shot") return juiceImage;
-  if (item.category === "Smoothies") return greenSmoothieImage;
-  if (item.category === "Bakery") return bakeryImage;
-  if (item.category === "Small plates") return smallPlateImage;
-  return latteImage;
-}
-
-// Legacy image variables remain only inside the catalog literals below. The
-// final mapping replaces them with the generated product family photography.
-const coffeeImage = latteImage;
-const brightImage = berryMatchaImage;
-const icedImage = sparklingImage;
-const foodImage = bakeryImage;
+// Catalog literals keep a harmless placeholder so each record remains complete.
+// The export below assigns the final generated product-specific photograph.
+const menuPlaceholderImage = "/images/qahwa-cup.png";
+const coffeeImage = menuPlaceholderImage;
+const brightImage = menuPlaceholderImage;
+const icedImage = menuPlaceholderImage;
+const foodImage = menuPlaceholderImage;
+const matchaImage = menuPlaceholderImage;
 
 const menuCatalog: MenuItem[] = [
   { id: "espresso", name: "Espresso", category: "Classics", price: 350, description: "A concentrated shot of Ethiopian 100% Arabica with a clean, aromatic finish.", image: coffeeImage },
@@ -179,7 +133,7 @@ const menuCatalog: MenuItem[] = [
 
 export const menuItems: MenuItem[] = menuCatalog.map((item) => ({
   ...item,
-  image: menuImageFor(item),
+  image: `/images/menu-v2/${item.id}.webp`,
 }));
 
 export const teaGuides = [
